@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { format } from "date-fns"
+import { addDays, format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -27,6 +27,15 @@ export function DatePicker({ date, setDate }) {
                 description: 'Selected Date should be a future Date'
             });
             return
+        }
+
+        if (newDate > addDays(Date.now, 30)) {
+            toast({
+                variant: 'destructive',
+                title: 'Invalid Date',
+                description: 'Selected Date should be less than a month than now'
+            });
+            return;
         }
 
         setDate(newDate)

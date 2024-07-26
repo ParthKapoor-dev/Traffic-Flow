@@ -17,14 +17,19 @@ async function fetchData(req, res) {
 }
 
 async function fetchDateRecord(req, res) {
-    const date = req.body.seldate;
+    const date = req.query.seldate;
     console.log('date is ', date);
     try {
-        const newData = await DateModel.findOne({ date });
-        console.log(newData);
+        // const newData = await DateModel.findOne({ date });
+        const client = mongoose.connection.db;
+        const collection = client.collection('outputCollection');
+        const data = await collection.findOne({
+            date
+        }); 
+        console.log(data);
         res.status(200).json({
-            message: 'Date saved successfully',
-            date: newData
+            message: 'Found Data',
+            data
         });
     } catch (error) {
         console.log(error);

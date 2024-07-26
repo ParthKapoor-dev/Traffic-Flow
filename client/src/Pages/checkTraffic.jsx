@@ -8,17 +8,22 @@ import { useEffect, useState } from "react";
 export default function CheckTraffic() {
 
     const [date, setDate] = useState(null);
+    const [data, setData] = useState([]);
     const { toast } = useToast();
-
-
 
     async function handleSubmit(event) {
         event.preventDefault();
         console.log(date);
+        const chosenDate = new Date(date);
+        const month = chosenDate.getMonth() < 10 ? `0${chosenDate.getMonth() + 1}` : (chosenDate.getMonth() + 1).toString();
+        const currentDate = chosenDate.getDate() < 10 ? `0${chosenDate.getDate()}` : chosenDate.getDate().toString();
+        const finalDate = `${chosenDate.getFullYear()}-${month}-${currentDate}`;
+
         try {
-            const resp = await axios.get(import.meta.env.VITE_URI + '/fetch-date-record?seldate='+date);
-            
-            console.log('Succesful Response is : ', resp);
+            const resp = await axios.get(import.meta.env.VITE_URI + '/fetch-date-record?seldate=' + finalDate);
+
+            console.log('Succesful Response is : ', resp.data.data.data);
+            setData(resp.data.data.data);
         } catch (error) {
             toast({
                 variant: 'destructive',
@@ -44,7 +49,7 @@ export default function CheckTraffic() {
                 </div>
 
                 <div>
-                    <DataTable data={[]} />
+                    <DataTable data={data} />
                 </div>
 
 
