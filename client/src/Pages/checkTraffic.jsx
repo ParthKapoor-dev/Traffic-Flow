@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function CheckTraffic() {
 
+    const [showDate , setShowDate] = useState(null);
     const [date, setDate] = useState(null);
     const [data, setData] = useState([]);
     const { toast } = useToast();
@@ -18,6 +19,7 @@ export default function CheckTraffic() {
         const month = chosenDate.getMonth() < 10 ? `0${chosenDate.getMonth() + 1}` : (chosenDate.getMonth() + 1).toString();
         const currentDate = chosenDate.getDate() < 10 ? `0${chosenDate.getDate()}` : chosenDate.getDate().toString();
         const finalDate = `${chosenDate.getFullYear()}-${month}-${currentDate}`;
+        setShowDate(finalDate);
 
         try {
             const resp = await axios.get(import.meta.env.VITE_URI + '/fetch-date-record?seldate=' + finalDate);
@@ -48,8 +50,20 @@ export default function CheckTraffic() {
                     </Button>
                 </div>
 
-                <div>
-                    <DataTable data={data} />
+                {data.length !== 0 && (
+                    <p className="text-lg py-2">
+                      Hey👋! There is your data for {showDate}  
+                    </p>
+                )}
+
+                <div className="flex justify-between">
+                    <DataTable data={data.filter(item =>
+                        item.hour.split(' ')[1] == 'AM'
+                    )} />
+                    <DataTable data={data.filter(item =>
+                        item.hour.split(' ')[1] == 'PM'
+                    )} />
+
                 </div>
 
 
