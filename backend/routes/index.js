@@ -1,9 +1,9 @@
-const { fetchData, saveDate } = require('../controllers/fetch');
+const { fetchData, fetchDateRecord } = require('../controllers/fetch');
 
 const router = require('express').Router();
 
 router.get('/fetch', fetchData);
 
-router.post('/upload-date', saveDate);
+router.get('/fetch-date-record', fetchDateRecord);
 
 module.exports = router;

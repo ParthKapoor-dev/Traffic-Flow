@@ -14,11 +14,9 @@ export default function CheckTraffic() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-
+        console.log(date);
         try {
-            const resp = await axios.post(import.meta.env.VITE_URI + '/upload-date', {
-                date
-            });
+            const resp = await axios.get(import.meta.env.VITE_URI + '/fetch-date-record?seldate='+date);
             
             console.log('Succesful Response is : ', resp);
         } catch (error) {

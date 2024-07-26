@@ -16,14 +16,15 @@ async function fetchData(req, res) {
     }
 }
 
-async function saveDate(req, res) {
-    const date = req.body.date;
+async function fetchDateRecord(req, res) {
+    const date = req.body.seldate;
     console.log('date is ', date);
     try {
-        const newDate = await DateModel.create({ departdate: date });
+        const newData = await DateModel.findOne({ date });
+        console.log(newData);
         res.status(200).json({
             message: 'Date saved successfully',
-            date: newDate
+            date: newData
         });
     } catch (error) {
         console.log(error);
@@ -35,5 +36,5 @@ async function saveDate(req, res) {
 
 module.exports = {
     fetchData,
-    saveDate
+    fetchDateRecord
 }
