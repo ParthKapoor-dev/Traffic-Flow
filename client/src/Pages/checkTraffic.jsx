@@ -1,11 +1,32 @@
 import { DataTable } from "@/components/Table";
 import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/DatePicker";
-import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function CheckTraffic() {
 
     const [date, setDate] = useState(null);
+    const { toast } = useToast();
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        try {
+            const resp = await axios.post(import.meta.env.VITE_URI + '/upload-date', {
+                date
+            });
+            
+            console.log('Succesful Response is : ', resp);
+        } catch (error) {
+            toast({
+                variant: 'destructive',
+                description: error.message
+            });
+            console.log(error);
+        }
+    }
 
     return (
         <div className="px-16 py-8 w-full h-full">
@@ -17,13 +38,13 @@ export default function CheckTraffic() {
 
                 <div className="flex gap-2 items-center">
                     <DatePicker date={date} setDate={setDate} />
-                    <Button disabled={date == null} >
+                    <Button disabled={date == null} onClick={handleSubmit}>
                         Submit
                     </Button>
                 </div>
 
                 <div>
-                    <DataTable />
+                    <DataTable data={[]} />
                 </div>
 
 
