@@ -7,8 +7,8 @@ const cors = require("cors");
 app.use(cors());
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });  
+  console.log(`Server running on port ${port}`);
+});
 
 // Replace with your MongoDB URI
 const uri = 'mongodb+srv://bansalrehan731:TESTtest123@g2cmern.cxyid8a.mongodb.net/Traffic?retryWrites=true&w=majority&appName=g2cmern';
@@ -23,10 +23,10 @@ app.get('/fetch', async (req, res) => {
     const collection = client.collection("trafficdataColl");
     const data = await collection.find({}).toArray();
     console.log(data);
-    res.json({status: true, res: data});
+    res.json({ status: true, res: data });
     console.log("sent data");
   } catch (error) {
     console.error(error);
-    res.json({status: false, msg: "server error"});
+    res.json({ status: false, msg: "server error" });
   }
 });
