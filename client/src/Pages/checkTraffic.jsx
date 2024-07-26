@@ -10,6 +10,8 @@ export default function CheckTraffic() {
     const [date, setDate] = useState(null);
     const { toast } = useToast();
 
+
+
     async function handleSubmit(event) {
         event.preventDefault();
 

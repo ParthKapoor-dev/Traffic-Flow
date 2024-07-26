@@ -5,6 +5,7 @@ const LandingPage = () => {
   const [data, setData] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {

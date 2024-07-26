@@ -19,6 +19,7 @@ export function DatePicker({ date, setDate }) {
     const { toast } = useToast();
 
     function handleSetDate(newDate) {
+        console.log(newDate);
         if (newDate < Date.now()) {
             toast({
                 variant: 'destructive',
