@@ -30,3 +30,24 @@ app.get('/fetch', async (req, res) => {
     res.json({status: false, msg: "server error"});
   }
 });
+
+const dateSchema = new mongoose.Schema(
+  {
+    departdate: {
+      type: Date
+    }
+  }
+)
+
+const DateModel = mongoose.model("DepartDateColl", dateSchema);
+
+app.get('/upload-date', async (req, res) => {
+  const { date } = req.query;
+  try {
+      const newDate = new DateModel({ date });
+      await newDate.save();
+      res.status(200).json({ message: 'Date saved successfully' });
+  } catch (error) {
+      res.status(500).json({ error: 'Failed to save date' });
+  }
+});
